@@ -1,13 +1,27 @@
 import './Header.css';
 
 import logo from '../assets/images/logo512.png';
-import letterV from '../assets/images/letterV.png';
+import HeroV from './HeroV';
 
 function Header() {
     return (
         <header className="header">
 
+            {/* Animated Background — the 3D V now lives here, full-bleed */}
+            <div className="background">
+
+                <div className="background-glow"></div>
+
+                <HeroV className="hero-canvas" />
+
+                <div className="grid-overlay"></div>
+
+            </div>
+
+            {/* ================= NAVBAR ================= */}
+
             <nav className="navbar">
+
                 <div className="brand">
 
                     <img
@@ -17,8 +31,11 @@ function Header() {
                     />
 
                     <div className="brand-text">
+
                         <h2>firstweb</h2>
+
                         <p>automate everything.</p>
+
                     </div>
 
                 </div>
@@ -34,11 +51,19 @@ function Header() {
                     </button>
 
                 </div>
+
             </nav>
 
-            <div className="hero">
+            {/* ================= HERO ================= */}
+            {/* Text now sits directly on top of the full-page V background */}
+
+            <section className="hero">
 
                 <div className="hero-left">
+
+                    <p className="hero-label">
+                        WEBSITES POWERED BY AI
+                    </p>
 
                     <h1>
                         Websites
@@ -49,23 +74,18 @@ function Header() {
                     </h1>
 
                     <p className="hero-subtext">
-                        Beautiful websites, intelligent automation,
-                        and modern digital experiences.
+
+                        Beautiful websites powered by artificial intelligence,
+                        automation, and modern design that help businesses
+                        scale faster.
+
                     </p>
 
                     <button className="project-btn">
+
                         START A PROJECT →
+
                     </button>
-
-                </div>
-
-                <div className="hero-center">
-
-                    <img
-                        src={letterV}
-                        alt="3D Letter V"
-                        className="hero-image"
-                    />
 
                 </div>
 
@@ -73,23 +93,33 @@ function Header() {
 
                     <div className="info-card">
 
-                        <h3>FIRSTWEB</h3>
+                        <span className="card-label">
+
+                            FIRSTWEB
+
+                        </span>
+
+                        <h3>
+
+                            AI websites,
+                            <br />
+                            built for growth
+
+                        </h3>
 
                         <p>
-                            AI websites
-                            <br />
-                            built for speed,
-                            <br />
-                            automation,
-                            <br />
-                            and growth.
+
+                            Design, automation, and AI —
+                            combined to attract, convert,
+                            and save you time.
+
                         </p>
 
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
         </header>
     );
