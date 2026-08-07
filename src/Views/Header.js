@@ -89,36 +89,6 @@ function Header() {
 
                 </div>
 
-                <div className="hero-right">
-
-                    <div className="info-card">
-
-                        <span className="card-label">
-
-                            FIRSTWEB
-
-                        </span>
-
-                        <h3>
-
-                            AI websites,
-                            <br />
-                            built for growth
-
-                        </h3>
-
-                        <p>
-
-                            Design, automation, and AI —
-                            combined to attract, convert,
-                            and save you time.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
             </section>
 
         </header>

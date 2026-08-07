@@ -45,7 +45,7 @@ function HeroV({ className }) {
         const edgeColor = new THREE.Color("#f2eadc");
         const faceColor = new THREE.Color("#0c0a08");
         const glowColor = new THREE.Color("#e08a3e");
-        const ringColor = new THREE.Color("#d99a5c");
+        const ringColor = new THREE.Color("#d8dbde");
 
         // ---- Build one leg of the V. Both legs pivot from the SAME shared
         // vertex (the group origin), so their bases always coincide exactly —
@@ -123,37 +123,33 @@ function HeroV({ className }) {
         const ringsCenterY = -0.6;
         vMesh.position.y = ringsCenterY - legLength / 2;
 
-        // ---- Planet-style rings: several concentric bands, all sharing one tilt ----
-        function buildRingBand(radius, bandWidth, opacity) {
-            const geo = new THREE.RingGeometry(radius, radius + bandWidth, 96, 1);
-            const mat = new THREE.MeshBasicMaterial({
-                color: ringColor,
-                transparent: true,
-                opacity,
-                side: THREE.DoubleSide,
-            });
-            return new THREE.Mesh(geo, mat);
-        }
+        // ---- Six thin rings, each tilted in its own direction, forming a
+        // gyroscope-style cage around the V ----
         function buildRingLine(radius, opacity) {
             const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, Math.PI * 2, false, 0);
             const points = curve.getPoints(96).map((p) => new THREE.Vector3(p.x, p.y, 0));
             const geo = new THREE.BufferGeometry().setFromPoints(points);
-            const mat = new THREE.LineBasicMaterial({ color: edgeColor, transparent: true, opacity });
+            const mat = new THREE.LineBasicMaterial({ color: ringColor, transparent: true, opacity });
             return new THREE.LineLoop(geo, mat);
         }
 
-        ringsGroup.add(
-            buildRingBand(3.6, 0.7, 0.05),
-            buildRingBand(4.6, 0.5, 0.06),
-            buildRingLine(3.6, 0.28),
-            buildRingLine(4.3, 0.18),
-            buildRingLine(5.1, 0.12)
-        );
+        const ringRadius = 4.2;
+        // rotation.y intentionally left at 0 on every ring — any Y-axis
+        // component tips a ring up on edge so it reads as "standing"
+        // vertical; keeping only X/Z rotation keeps all rings lying in a
+        // horizontal, Saturn-style tilt, just at different angles.
+        const ringTilts = [
+            [1.22, 0, 0.32],
+            [0.85, 0, 1.05],
+            [1.4, 0, -0.6],
+        ];
+        ringTilts.forEach(([rx, ry, rz]) => {
+            const ring = buildRingLine(ringRadius, 0.22);
+            ring.rotation.set(rx, ry, rz);
+            ringsGroup.add(ring);
+        });
 
-        // shared "planet ring" tilt — flat plane rotated into an angled ellipse
         ringsGroup.position.y = -0.6;
-        ringsGroup.rotation.x = 1.22;
-        ringsGroup.rotation.z = 0.32;
 
         // ---- Lighting ----
         scene.add(new THREE.AmbientLight(0x332a22, 0.6));
